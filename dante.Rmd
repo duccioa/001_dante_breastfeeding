@@ -1,0 +1,19 @@
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, cache=TRUE)
+```
+
+```{r Packages, include=FALSE}
+require(ggplot2)
+require(tidyr)
+require(dplyr)
+require(grid)
+require(gridExtra)
+require(lubridate)
+```
+
+```{r Load csv}
+dante <- read.csv("dante_logbook-sheet1.csv")
+dante$date1 <- parse_date_time(paste(dante$date, " ", dante$time), "dmy hms")
+levels(dante$boob) <- c("bottle", "both", "cluster", "right", "left")
+for(i in eval(length(dante$date1)-1)){dante$interval[i+1] <- dante$date1[i+1]-dante$date1[i]}
+```
