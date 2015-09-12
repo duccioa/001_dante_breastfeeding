@@ -1,0 +1,18 @@
+{
+    "contents" : "f <- function() {\n    for(i in 1:length(dante$date1)-1){dante$interval[i+1] <- dante$date1[i+1]-dante$date1[i]}\n}",
+    "created" : 1441944282054.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "594810865",
+    "id" : "532175B6",
+    "lastKnownWriteTime" : 8749475302245086000,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

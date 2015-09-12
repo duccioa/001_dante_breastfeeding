@@ -13,7 +13,24 @@ require(lubridate)
 
 ```{r Load csv}
 dante <- read.csv("dante_logbook-sheet1.csv")
+```
+
+```{r Manipiulation}
 dante$date1 <- parse_date_time(paste(dante$date, " ", dante$time), "dmy hms")
 levels(dante$boob) <- c("bottle", "both", "cluster", "right", "left")
-for(i in eval(length(dante$date1)-1)){dante$interval[i+1] <- dante$date1[i+1]-dante$date1[i]}
+dante$calmosyl <- as.logical(dante$calmosyl)
+#for(i in 1:length(dante$date1)-1){dante$interval[i+1] <- dante$date1[i+1]-dante$date1[i]}; dante$interval[1]<-0
+#dante$date2 <- dante$date1
+dante$date2 <- dante$date1
+for(i in 1:length(dante$date1)){
+    minute(dante$date2[i]) <- round(minute(dante$date2[i])/10, 0)*10
+}
+for(i in 1:length(dante$date1)-1){dante$interval[i+1] <- dante$date1[i+1]-dante$date1[i]}; dante$interval[1]<-0
+
+
+```
+
+
+```{r First look}
+print(paste("Max interval:", round(max(dante$interval[dante$interval < 10]), 3), "in date", dante$date1[1]) )
 ```
