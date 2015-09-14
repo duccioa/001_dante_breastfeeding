@@ -19,18 +19,24 @@ dante <- read.csv("dante_logbook-sheet1.csv")
 dante$date1 <- parse_date_time(paste(dante$date, " ", dante$time), "dmy hms")
 levels(dante$boob) <- c("bottle", "both", "cluster", "right", "left")
 dante$calmosyl <- as.logical(dante$calmosyl)
-#for(i in 1:length(dante$date1)-1){dante$interval[i+1] <- dante$date1[i+1]-dante$date1[i]}; dante$interval[1]<-0
-#dante$date2 <- dante$date1
+
 dante$date2 <- dante$date1
 for(i in 1:length(dante$date1)){
     minute(dante$date2[i]) <- round(minute(dante$date2[i])/10, 0)*10
+} ## Round time to 10 inutes steps
+dante$interval[1]<-0; for(i in 2:length(dante$date2)){dante$interval[i] <- round(dante$date2[i]-dante$date2[i-1], 2)}## Interval
+dante$interval[dante$interval > 12] <- dante$interval[dante$interval > 12]/60 ##Adjust minutes to fraction of an hour
+week_tag <- function() {
+    origin <- as.POSIXct(strptime("2015-08-03 00:00:00", "%Y-%m-%d %H:%M:%S"))
+    
 }
-for(i in 1:length(dante$date1)-1){dante$interval[i+1] <- dante$date1[i+1]-dante$date1[i]}; dante$interval[1]<-0
-
-
 ```
 
 
 ```{r First look}
-print(paste("Max interval:", round(max(dante$interval[dante$interval < 10]), 3), "in date", dante$date1[1]) )
+##Longer interval
+print(paste("Max interval:", max(dante$interval[dante$interval < 10]), "in date", dante$date1[which.max(dante$interval[dante$interval < 10])-1])) 
+##Interval length distribution
+ggplot(dante, aes(x = interval)) + geom_histogram(binwidth = .5, colour = "black", fill = "cadetblue3")
+summary(dante$interval)
 ```
